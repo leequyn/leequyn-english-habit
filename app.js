@@ -1,14 +1,15 @@
+const bbc='https://www.youtube.com/@bbclearningenglish/videos';
 const data=[
-  ['Dễ - làm quen','https://learningenglish.voanews.com/z/3521','https://www.newsinlevels.com/','What did I do today?'],
-  ['Dễ - lặp lại','https://learningenglish.voanews.com/z/3521','https://www.newsinlevels.com/','Describe my current job.'],
-  ['Dễ - củng cố','https://www.youtube.com/@VOALearningEnglish','https://www.newsinlevels.com/','Why do I want to improve English?'],
-  ['Trung bình - công việc','https://www.youtube.com/@SpeakEnglishWithVanessa','https://breakingnewsenglish.com/','What project am I working on now?'],
-  ['Trung bình - AI/công nghệ','https://www.youtube.com/@OpenAI','https://openai.com/news/','How can AI help my work?'],
-  ['Ôn tập thông minh','https://learningenglish.voanews.com/','https://www.newsinlevels.com/','What did I learn this week?'],
-  ['Tổng kết & thiết kế tuần sau','https://www.youtube.com/@VOALearningEnglish','https://breakingnewsenglish.com/','My goals for next week.']
+  ['Dễ - làm quen',bbc,'https://www.newsinlevels.com/','What did I do today?','BBC 6 Minute English - chọn video mới nhất'],
+  ['Dễ - lặp lại',bbc,'https://www.newsinlevels.com/','Describe my current job.','BBC 6 Minute English - chọn video mới thứ 2'],
+  ['Dễ - củng cố',bbc,'https://www.newsinlevels.com/','Why do I want to improve English?','BBC 6 Minute English - chọn video mới thứ 3'],
+  ['Trung bình - công việc','https://www.youtube.com/@SpeakEnglishWithVanessa','https://breakingnewsenglish.com/','What project am I working on now?','Vanessa - chọn video Daily English/Conversation ngắn'],
+  ['Trung bình - AI/công nghệ','https://www.youtube.com/@OpenAI','https://openai.com/news/','How can AI help my work?','OpenAI - chọn video ngắn/dễ hiểu nhất'],
+  ['Ôn tập thông minh',bbc,'https://www.newsinlevels.com/','What did I learn this week?','Nghe lại video BBC của Day 1'],
+  ['Tổng kết & thiết kế tuần sau',bbc,'https://breakingnewsenglish.com/','My goals for next week.','Nghe lại video BBC của Day 2']
 ];
 
-const listen=['Nghe 1 bài/video không nhìn transcript.','Trả lời: bài nói về chủ đề gì?','Nghe lại đoạn khó nhất.','Ghi 3 từ/cụm từ nghe được.'];
+const listen=['Mở nguồn học theo gợi ý của ngày này.','Nghe 1 lần, chưa cần hiểu hết.','Trả lời: bài/video nói về chủ đề gì?','Nghe lại đoạn khó nhất và ghi 3 từ/cụm từ.'];
 const read=['Đọc 1 bài phù hợp trình độ.','Đọc lần 1 để nắm ý chính.','Tóm tắt ai/cái gì/vì sao/kết quả.','Tra tối đa 5 từ.'];
 const speak=['Nói 2-4 phút.','Không dừng để tra từ.','Thiếu từ thì diễn đạt vòng.','Ghi lại 3 câu muốn nói tốt hơn.'];
 
@@ -151,8 +152,8 @@ function renderHeatmap(){
   document.getElementById('heatGrid').innerHTML=html;
 }
 
-function block(icon,title,link,items,placeholder){
-  return `<div class="task card"><h3>${icon} ${title}</h3>${link?`<p><a href="${link}" target="_blank">Mở nguồn học</a></p>`:''}${items.map(t=>`<label><input type="checkbox"> ${t}</label>`).join('')}<textarea placeholder="${placeholder}"></textarea></div>`;
+function block(icon,title,link,items,placeholder,guide){
+  return `<div class="task card"><h3>${icon} ${title}</h3>${guide?`<p class="small"><b>Gợi ý:</b> ${guide}</p>`:''}${link?`<p><a href="${link}" target="_blank">Mở nguồn học</a></p>`:''}${items.map(t=>`<label><input type="checkbox"> ${t}</label>`).join('')}<textarea placeholder="${placeholder}"></textarea></div>`;
 }
 
 function render(){
@@ -162,7 +163,7 @@ function render(){
   document.getElementById('levelText').textContent=item[0];
   document.getElementById('dayTitle').textContent='Ngày '+current;
   document.getElementById('tasks').innerHTML=
-    block('🎧','Listening',item[1],listen,'Video nói về gì? Hiểu bao nhiêu %?')+
+    block('🎧','Listening',item[1],listen,'Video nói về gì? Hiểu bao nhiêu %?',item[4])+
     block('📖','Reading',item[2],read,'Tóm tắt bài đọc và ghi từ mới...')+
     block('🎤','Speaking',null,[`Chủ đề: ${item[3]}`,...speak],'Ghi 3 câu muốn nói tốt hơn...');
   document.getElementById('completeBox').innerHTML=`<label><input type="checkbox"> <b>Hoàn thành Ngày ${current}</b> — bài này đã xong 100%.</label>`;
